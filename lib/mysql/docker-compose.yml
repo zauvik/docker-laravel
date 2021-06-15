@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  mysql:
+    image: mysql:8.0.24
+    container_name: mysql
+    restart: unless-stopped
+    tty: true
+    ports: 
+        - "3306::3306"
+    volumes:
+      - ./lib/mysql/data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: deployer
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'root_password'
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks: 
+      - laravel-docker-test
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8083:8080
+    networks: 
+      - laravel-docker-test

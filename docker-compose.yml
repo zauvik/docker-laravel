@@ -1,0 +1,20 @@
+version: '3.3'
+
+networks: 
+    laravel-docker-test:
+        
+services:
+    mysql:
+    app:
+        # container_name: laravel-app-test
+        container_name: app
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./src:/var/www
+            - ./lib/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        depends_on:
+            - mysql
+        networks: 
+            - laravel-docker-test

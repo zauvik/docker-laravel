@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+    app :
+    nginx:
+        image: nginx
+        restart: unless-stopped
+        volumes:
+            - ./src:/var/www
+            - ./lib/nginx/config/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+        tty: true
+        depends_on:
+            - app
+        ports:
+            - "80:80"
+            - "443:443"
+        networks: 
+            - laravel-docker-test
